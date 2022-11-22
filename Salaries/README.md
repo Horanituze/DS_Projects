@@ -1,4 +1,4 @@
-### DATA SCIENCE SALARIES
+### DATA SCIENCE JOB SALARIES
 
 - Exploratory Data Analysis
 - Model Building
