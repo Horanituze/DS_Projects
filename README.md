@@ -1,1 +1,1 @@
-# DS_Projects
+# DATA SCIENCE PROJECTS 
