@@ -22,14 +22,10 @@ I clean up data so that it was usable for our model. I made the following change
 ## EDA
 I looked at the distributions of the data and the value counts for the various categorical variables. Below are a few highlights.
 ![countries](https://user-images.githubusercontent.com/44282495/208831528-79e98b40-3972-4e97-ac34-5e40bb42bb8d.png)
-<img width="680" alt="data" src="https://user-images.githubusercontent.com/44282495/208831668-7d749baf-d2e6-4b9c-971f-5160cfaed0d8.png">
 ![DS_roles](https://user-images.githubusercontent.com/44282495/208831685-5a818266-5496-4c2a-993d-934d93e7cb98.png)
 ![residence](https://user-images.githubusercontent.com/44282495/208831702-f11ecce3-04b9-4787-bfad-c958306e6806.png)
 <img width="633" alt="salary_year" src="https://user-images.githubusercontent.com/44282495/208831727-6c9ef283-5ec9-47b5-a56a-c98f470b9e79.png">
-
-
-
-
+<img width="680" alt="data" src="https://user-images.githubusercontent.com/44282495/208831668-7d749baf-d2e6-4b9c-971f-5160cfaed0d8.png">
 
 ## Model Building
 First, I transformed the categorical variables into dummy variables. I also split the data into train and tests sets with a test size of 20%.
