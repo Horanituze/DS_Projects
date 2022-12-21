@@ -3,7 +3,7 @@
 """
 Created on Tue Dec 20 15:18:02 2022
 
-@author: jhoranituze2
+@author: jocelyne Horanituze
 """
 
 import requests
