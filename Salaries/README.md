@@ -5,11 +5,11 @@
 * Built a client facing API using flask
 
 ## Code and Resources Used
-**Dataset and Description: https://www.kaggle.com/datasets/ruchi798/data-science-job-salaries
-**Python Version: 3.7
-**Packages: pandas, numpy, sklearn, matplotlib, seaborn, selenium, flask, json, pickle
-**Flask Productionization: https://towardsdatascience.com/productionize-a-machine-learning-model-with-flask-and-heroku-8201260503d2
-**YouTube Project Walk-Through: https://www.youtube.com/playlist?list=PL2zq7klxX5ASFejJj80ob9ZAnBHdz5O1t
+**Dataset and Description:** https://www.kaggle.com/datasets/ruchi798/data-science-job-salaries
+**Python Version:** 3.7
+**Packages:** pandas, numpy, sklearn, matplotlib, seaborn, selenium, flask, json, pickle
+**Flask Productionization:** https://towardsdatascience.com/productionize-a-machine-learning-model-with-flask-and-heroku-8201260503d2
+**YouTube Project Walk-Through:** https://www.youtube.com/playlist?list=PL2zq7klxX5ASFejJj80ob9ZAnBHdz5O1t
 
 ## Data Cleaning
 I clean up data so that it was usable for our model. I made the following changes and created the following variables:
@@ -23,6 +23,7 @@ I clean up data so that it was usable for our model. I made the following change
 I looked at the distributions of the data and the value counts for the various categorical variables. Below are a few highlights.
 ![alt text](Salaries/EDA plots/countries.png) 
 ![plot](./Salaries/EDA plots/countries.png)
+![Screenshot](countries.png)
 
 ## Model Building
 First, I transformed the categorical variables into dummy variables. I also split the data into train and tests sets with a test size of 20%.
