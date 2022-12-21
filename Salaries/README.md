@@ -21,9 +21,8 @@ I clean up data so that it was usable for our model. I made the following change
 
 ## EDA
 I looked at the distributions of the data and the value counts for the various categorical variables. Below are a few highlights.
-![alt text](Salaries/EDA plots/countries.png) 
-![plot](./Salaries/EDA plots/countries.png)
-![Screenshot](Salaries/EDA plots/countries.png)
+![countries](https://user-images.githubusercontent.com/44282495/208831528-79e98b40-3972-4e97-ac34-5e40bb42bb8d.png)
+
 
 ## Model Building
 First, I transformed the categorical variables into dummy variables. I also split the data into train and tests sets with a test size of 20%.
