@@ -8,3 +8,4 @@
     - exploratory data analysis 
     - classification
 - DATA VISUALIZATION USING R
+    - Analysis of different R datasets 
