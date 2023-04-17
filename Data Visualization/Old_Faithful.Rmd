@@ -1,6 +1,6 @@
 ---
 author: "Jocelyne Horanituze"
-date: "`r format(Sys.Date(), '%B %e, %Y')`"
+date: "April 17, 2023"
 output:
   github_document:
     keep_html: true
@@ -32,7 +32,7 @@ with(faithful, mean(eruptions[1:4]))
 
 ## 3. First Five Records of the Eruptions Data
 
--   The first five rows of the `faithful` data frame.
+- The first five rows of the `faithful` data frame.
 
 ```{r, echo = FALSE}
 d <-data.frame(head(faithful, n=5))
@@ -47,5 +47,5 @@ with(faithful, hist(eruptions, labels= TRUE, main = "Histogram of Eruption Durat
       xlab = "Eruption Durations"))
 ```
 
--   More than 100 eruptions lasted at least 4 minutes.
--   Our data shows some variability; some eruption durations are short (less than 3 minutes) while others are long.
+- More than 100 eruptions lasted at least 4 minutes.
+- Our data shows some variability; some eruption durations are short (less than 3 minutes) while others are long.
