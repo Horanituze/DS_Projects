@@ -1,9 +1,9 @@
 ---
 author: "Jocelyne Horanituze"
 date: "`r format(Sys.Date(), '%B %e, %Y')`"
-output:
-  github_document
+output: github_document
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -46,7 +46,4 @@ with(faithful, hist(eruptions, labels= TRUE, main = "Histogram of Eruption Durat
       xlab = "Eruption Durations"))
 ```
 
-- More than 100 eruptions lasted at least 4 minutes.
-- Our data shows some variability; some eruption durations are shorter (less than 3 minutes)
-  while others are long. 
-
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
