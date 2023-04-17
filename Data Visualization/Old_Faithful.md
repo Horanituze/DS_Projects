@@ -29,6 +29,12 @@ with(faithful, mean(eruptions[1:4]))
 
 - The first five rows of the `faithful` data frame.
 
+``` r
+d <-data.frame(head(faithful, n=5))
+kbl <- knitr::kable(d, format = "html")
+kableExtra::kable_styling(kbl, full_width = FALSE)
+```
+
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
