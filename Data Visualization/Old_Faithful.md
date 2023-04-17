@@ -1,5 +1,5 @@
 Jocelyne Horanituze
-April 17, 2023
+April 17th, 2023
 
 In this file, we will be using the *faithful* data set in R.
 
