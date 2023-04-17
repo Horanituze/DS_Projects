@@ -1,7 +1,8 @@
 ---
 author: "Jocelyne Horanituze"
 date: "`r format(Sys.Date(), '%B %e, %Y')`"
-output: html_document
+output:
+  github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -46,6 +47,6 @@ with(faithful, hist(eruptions, labels= TRUE, main = "Histogram of Eruption Durat
 ```
 
 - More than 100 eruptions lasted at least 4 minutes.
-- Our data shows some variability; some eruption durations are short (less than 3 minutes)
+- Our data shows some variability; some eruption durations are shorter (less than 3 minutes)
   while others are long. 
 
