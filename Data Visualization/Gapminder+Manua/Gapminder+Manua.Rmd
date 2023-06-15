@@ -1,5 +1,5 @@
 ---
-author: "Jocelyne Horanituze/"
+author: "Jocelyne Horanituze /"
 date: "June 15, 2023"
 output:
   github_document:
