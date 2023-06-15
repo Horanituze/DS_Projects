@@ -1,0 +1,103 @@
+---
+author: "Jocelyne Horanituze/"
+date: "June 15, 2023"
+output:
+  github_document:
+    keep_html: true
+    pandoc_args: ["--self-contained", "--mathjax"]
+always_allow_html: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+In this file, we will be using 
+
+- the *Gapminder Data* data from dslabs package in R.
+        - It's a health and income outcomes for 184 countries from 1960 - 2016. 
+- The NOAA Earth System Research Laboratory [provides data](https://gml.noaa.gov/ccgg/trends/) on monthly mean carbon dioxide (CO2) measured at the Mauna Loa Observatory in Hawaii.
+
+## 1. Average Infant Mortality Rate by Continent in 2015
+
+```{r, echo = FALSE, message = FALSE, warning=FALSE}
+library(dplyr)
+data(gapminder, package = "dslabs")
+d <-data.frame( gapminder %>%
+                filter(year ==2015)%>%
+                group_by(continent)%>%
+                summarise(Average_infant_mortality_rate = mean(infant_mortality, na.rm = TRUE))%>%
+                arrange(desc(Average_infant_mortality_rate)))
+kbl <- knitr::kable(d, format = "html")
+kableExtra::kable_styling(kbl, full_width = FALSE)
+```
+
+- Average infant mortality rate, in deaths per 1000, for each continent for the year 2015.
+  - Africa shows the highest infant mortality rate of 47.9 , and Europe has lowest infant 
+  mortality rate of 4.5.
+
+## 2. Average Infant Mortality Rate by Continent Over the Years
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(ggplot2)
+d <-data.frame( gapminder %>%
+                group_by(continent, year)%>%
+                summarise(Average_infant_mortality_rate = mean(infant_mortality, na.rm = TRUE)))
+ggplot(d) + 
+     ggtitle("Average Infant Mortality rate by Continent Over the Years")+
+     theme(plot.title = element_text(hjust = 0.5))+
+     geom_line(aes( x = year,
+                   y= Average_infant_mortality_rate,
+                   group = (continent),
+                   color = continent)) +
+    ylab("Average Infant Mortality Rate")
+              
+      
+```
+
+- Average infant mortality rate, in deaths per 1000, for each continent over the years.
+
+- The graph shows an overall decrease in infant mortality rate over the years across continents. 
+  - Europe showed the lowest infant mortality rate among all continents over the years, and Africa had the highest infant mortality rate.
+
+## 3. Mauna Loa Atmospheric CO2 Concentration
+
+```{r, echo = FALSE , message = FALSE, warning= FALSE}
+library(tidyr)
+co2_2022 <- read.csv("co2-2022.csv", na.strings = "***")
+lco2_2022<- pivot_longer(co2_2022,
+                         -year,
+                         names_to = "month",
+                         values_to = "co2")
+Avg_lco2_2022 <- data.frame(lco2_2022 %>% 
+                            group_by(year) %>% 
+                            summarise(Yearly_average_co2 = mean(co2, na.rm = TRUE)))
+
+ggplot(Avg_lco2_2022) + 
+     ggtitle("Yearly Average Mauna Loa CO2 Concentration Over the Years In Parts Per Million")+
+     theme(plot.title = element_text(hjust = 0.5))+
+     geom_line(aes( x = year,
+                   y= Yearly_average_co2)) +
+   ylab("co2")
+    
+```
+
+- The graph shows an overall increase in Atmospheric CO2 Concentration over the years.
+- The CO2 concentration increase from 1960 - 2000, is almost the same as the past 20 years:
+    - CO2 Concentration has increased faster over the past 20 years than it did, over 40 years
+      from 1960 - 2000.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
