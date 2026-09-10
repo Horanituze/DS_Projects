@@ -14,7 +14,7 @@ Each `.Rmd` file knits to a GitHub-flavored `.md` document (`output: github_docu
 
 ## Contents
 
-- [**01 — Visualization Design Principles**]([./01-visualization-design-principles.md](https://github.com/Horanituze/DS_Projects/blob/main/Data%20Visualization/01-visualization-design-principles.md))
+- [**01 — Visualization Design Principles**](./Data%20Visualization/01-visualization-design-principles.md)
   Recreating a misleading truncated-baseline bar chart side-by-side with a corrected zero-baseline version, then applying the same design lens to EPA fuel economy data: fuel type distributions, fuel type trends over time, and four ways to compare highway MPG distributions across years (strip plot, boxplot, violin plot, ridgeline plot).
 
 - [**02 — NYC Flights Analysis**]([./02-nyc-flights-analysis.md](https://github.com/Horanituze/DS_Projects/blob/main/Data%20Visualization/02-nyc-flights-analysis.md))
