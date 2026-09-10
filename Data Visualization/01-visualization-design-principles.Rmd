@@ -1,0 +1,181 @@
+---
+output:
+  github_document:
+    keep_html: true
+    pandoc_args: ["--self-contained", "--mathjax"]
+always_allow_html: true
+---
+
+**Jocelyne Horanituze**
+
+Sep 10, 2026
+
+This section starts with a bar chart baseline comparison (truncated vs. zero baseline), then applies the same lens to EPA fuel economy data, comparing fuel type distributions over time and four different chart types (strip plot, boxplot, violin plot, ridgeline plot) for the same highway MPG data.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(forcats)
+library(ggridges)
+
+trump_trans <- read.table("trump-trans.csv", header = TRUE, sep = ",")
+
+newmpg <- read_csv("vehicles.csv.zip", guess_max = 100000)
+```
+
+## 1. Bar Chart Baselines: Why Zero Matters
+
+A bar chart's length only represents a fair proportion of the underlying values when its axis starts at zero. To demonstrate this, the same presidential approval-on-taking-office data is plotted twice below: first with a truncated (non-zero) baseline, then with a proper zero baseline.
+
+**Misleading version (truncated baseline)**
+
+```{r, echo = FALSE, message = FALSE}
+ggplot(trump_trans) +
+     geom_col(aes(x = appr, y = reorder(toupper(pres), appr), fill = party)) +
+     scale_fill_manual(values = c(R = "red", D = "blue")) +
+     labs(y = "President", title = "FAVORABILITY ON TAKING OFFICE (truncated baseline)") +
+     coord_cartesian(xlim = c(min(trump_trans$appr) - 2, max(trump_trans$appr) + 2)) +
+     theme_get()
+```
+
+- The bar lengths don't reflect the actual data ratio — for instance, the difference between Trump and Obama is 39 points, but truncating the x-axis makes that difference look much smaller than it is.
+- Without a zero baseline shown, the chart is misleading to anyone comparing bar lengths at a glance.
+
+**Corrected version (zero baseline)**
+
+```{r, echo = FALSE, message = FALSE}
+p <- ggplot(trump_trans)+
+     geom_col(aes( x = appr,y= reorder(toupper(pres), appr), fill = party))+
+     scale_fill_manual(values = c(R = "red", D = "blue")) +
+     labs(y = "President", title = "FAVORABILITY ON TAKING OFFICE") +
+     scale_x_continuous(expand = expansion(mult = c(0, .1))) +
+     theme_get()
+
+p
+```
+
+- This version is a better representation of the data because:
+    - It has a baseline of 0, which makes the interpretation less biased compared to the truncated version above.
+    - The actual difference between Trump's and Obama's approval bar length is now obvious and significant, matching the real 39-point gap — in the truncated version, the difference was significant in numbers but the bar length told a different story.
+    - The bar lengths reflect the actual data ratio.
+
+## 2. EPA Fuel Economy: Distribution by Fuel Type
+
+Variables used from the EPA fuel economy dataset:
+
+- hwy: highway08 (highway MPG for fuelType1, single fuel vehicles) and highwayA08 (highway MPG for fuelType2, dual fuel vehicles)
+- cyl: cylinders
+- displ: displ
+- primary fuel type: fuelType
+
+```{r, echo=FALSE}
+d <- data.frame( newmpg %>%
+                group_by(fuelType) %>%
+                count(fuelType))
+kbl <- knitr::kable(d, col.names = c("Fuel Type", "Total number of models"),
+                    caption= "The number of models for each primary fuel type",format = "html" )
+kableExtra::kable_styling(kbl, full_width = FALSE)
+```
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+p <- ggplot(newmpg,aes(fct_infreq(fuelType)))+
+     geom_bar( aes(fill = fuelType)) +
+     labs(x = "Fuel Type",y= "Total number of models",
+          title = "NUMBER OF MODELS FOR EACH PRIMARY FUEL TYPE") +
+     coord_flip()+
+     theme_get()
+p
+```
+
+- Some fuel types (Regular gas or electricity, Gasoline or natural gas, Gasoline or propane) have fewer than 10 models, making them hard to see next to fuel types like Premium (13,811 models) and Regular (28,390 models). Due to this large range in variability, it's hard to tell the exact number of models for the smaller fuel-type categories.
+- The highest number of models (28,390) use **Regular** as their primary fuel type, followed by Premium, which is used by a total of **13,811** models.
+
+## 3. EPA Fuel Economy: Fuel Type Over the Years
+
+```{r, echo = FALSE , message = FALSE}
+newmpg1 <- filter(newmpg, year >= 1984 & year <= 2026)
+p <- ggplot(newmpg1,
+            aes(x = year,
+                y = reorder (fuelType, year),
+                fill = year)) +
+    geom_col(position = "fill") +
+    scale_x_continuous(expand = c(0, 0)) +
+    scale_fill_viridis_c() +
+    labs(y = "Fuel Type", x = NULL, title = "Distribution of primary fuel type over the years")
+p
+```
+
+- There has been a discontinuation in the use of CNG as a fuel type around 2015–2016.
+- Premium and electricity fuel types started to be used after 2013.
+- The highest number of models that used Regular and Diesel were between 1984 and 1992.
+- Gasoline or propane was used between 2000 and 2010.
+
+## 4. EPA Fuel Economy: Highway MPG Over the Years
+
+**Single/dual fuel comparison**
+
+```{r, echo = FALSE , message = FALSE}
+newmpg2 <- filter(newmpg, year >= 2000 & year <= 2026)
+p <- ggplot(newmpg2, aes(x = year,y = value, color = variable)) +
+     geom_point(aes(y = highway08, color = "highway08"),
+     size = 0.7, position = position_jitter(width = 0.7), alpha = 0.8) +
+     geom_point(aes(y = highwayA08, color = "highwayA08"),
+     size = 0.7, position = position_jitter(width = 0.7), alpha = 0.8) +
+     labs(title = "Highway Fuel Economy over the years") +
+     theme_get() + theme(axis.title.y = element_blank())
+p
+```
+
+- Overall, highway08 (highway MPG for fuel type 1, single fuel vehicles) is higher compared to highwayA08 (highway MPG for fuel type 2, dual fuel vehicles).
+- Overall MPG significantly increased after year 2010.
+- MPG was lower between 2005 and 2010.
+
+**Revisited: comparing distribution plot types**
+
+The same highway MPG data by year is shown below using four different chart types, to compare how well each communicates the trend and shape of the distribution.
+
+```{r, message=FALSE, echo=FALSE}
+newmpg3 <- filter(newmpg, year <= 2026, year >= 2000) %>%
+    mutate(year = factor(year))
+alpha <- 0.2
+size <- 0.3
+nyear <- length(levels(newmpg3$year))
+
+ggplot(newmpg3, aes(x = highway08, y = year)) +
+    geom_point(position = "jitter", size = size, alpha = alpha) +
+    ylab(NULL) +
+    labs(title = "Strip plot")+
+    theme_get()
+
+ggplot(newmpg3, aes(x = highway08, y = year)) +
+    geom_boxplot() +
+    ylab(NULL) +
+    labs(title = "Boxplots")+
+    theme_get()
+
+ggplot(newmpg3, aes(x = highway08, y = year)) +
+    geom_violin(scale = "width") +
+    ylab(NULL) +
+    labs(title = "Violin plots")+
+    theme_get()
+
+ggplot(newmpg3, aes(x = highway08, y = year)) +
+    geom_density_ridges() +
+    ylab(NULL) +
+    labs(title = "Ridgeline plots")+
+    theme_get()
+```
+
+- With **box plots**, it's easier to see that over time the outlying observations increase, meaning the highway gas mileage is significantly increasing over time.
+    - Over time, the distributions are becoming more skewed.
+    - It's hard to tell where the observations are most concentrated when using box plots.
+- With the **violin plot**, it's easier to see the shape of the distribution — as the plot gets larger, so does the number of observations.
+    - It's harder to see individual observations.
+- With **ridgeline plots**, it's easier to compare the distribution for every year on the same plot.
+    - It provides more detail about the skewness of the data compared to the box plot and violin plot.
+    - It's easier to see that the distributions differ from each other compared to the violin plots.
+- With the **strip plot**, each data point is shown individually, unlike the plots above.
+    - It's easier to spot the years with outlying data points.
+    - The downside is that as the number of data points increases, the plot becomes more crowded and harder to interpret.
