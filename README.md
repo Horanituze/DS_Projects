@@ -23,8 +23,6 @@ Each `.Rmd` file knits to a GitHub-flavored `.md` document (`output: github_docu
 - [**03 — Statistical Distributions & Model Diagnostics**](./03-statistical-distributions.md)
   Comparing density and eCDF plots for self-reported height data, then a scatterplot matrix and faceted coplot examining relationships in rubber abrasion-loss testing data.
 
-- [**04 — Interactive & Political Data Visualization**](./04-interactive-visualizations.md)
-  Comparing stacked bar, filled bar, and spine/mosaic plots for 2020 election results, plus an interactive Gapminder tooltip plot (GDP per capita vs. life expectancy over time).
 
 ## Tools Used
 R, ggplot2, dplyr, `nycflights13`, `ggridges`, `ggExtra`, `GGally`, `ggmosaic`, `plotly`, `gapminder`, `kableExtra`, `forcats`
